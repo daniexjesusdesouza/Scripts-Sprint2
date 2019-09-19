@@ -1,0 +1,90 @@
+enable
+configure terminal
+hostname R1
+banner motd "ACESSO APENAS PARA O DEPARTAMENTO DE TI"
+enable secret SenhadaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+line vty 0 15
+password SenhadaVTY
+login
+transport input ssh
+exec-timeout 10
+exit
+username Danieljesus privilege 15 secret senha Madagascar
+username Filipemondoni privilege 15 secret senha Madagascar
+username IanSimim privilege 15 secret senha Madagascar
+username Melissareis privilege 15 secret senha Madagascar
+username Renanaraujo privilege 15 secret senha Madagascar
+login block-for 180 attempts 3 within 60
+security passwords min-lenght 8
+line console 0 
+password SenhadaConsole 
+login
+exit
+service password-encryption
+interface gigabitEthernet 0/0
+ip address 172.16.0.1 255.255.0.0
+no shutdown
+exit
+interface gigabitEthernet 0/0.10
+encapsulation dot1q 10
+ip address 172.16.0.1 255.255.248.0
+description REDE 172.168.0.0/21 VOZ
+no shutdown
+exit
+interface gigabitEthernet 0/0.20
+encapsulation dot1q 20
+ip address 172.16.8.1 255.255.248.0
+description REDE 192.168.8.0/21 CONSULTAS
+no shutdown
+exit
+interface gigabitEthernet 0/0.30
+encapsulation dot1q 30
+ip address 172.16.16.1 255.255.254.0
+description REDE 172.16.16.0/23 ANALISTAS
+no shutdown
+exit
+interface gigabitEthernet 0/0.40
+encapsulation dot1q 40
+ip address 172.16.18.1 255.255.255.128
+description REDE 172.16.18.0/25 RH
+no shutdown
+exit
+interface gigabitEthernet 0/0.50
+encapsulation dot1q 50
+ip address 172.16.18.129 255.255.255.128
+description REDE 172.16.18.128/25 ADMINISTRADORES
+no shutdown
+exit
+interface gigabitEthernet 0/0.60
+encapsulation dot1q 60
+ip address 172.16.19.1 255.255.255.128
+description REDE 172.16.19.0/25 FINANCAS
+no shutdown
+exit
+interface gigabitEthernet 0/0.70
+encapsulation dot1q 70
+ip address 172.16.19.129 255.255.255.192
+description REDE 172.16.19.128/26 TI
+no shutdown
+exit
+interface gigabitEthernet 0/0.80
+encapsulation dot1q 80
+ip address 172.16.19.193 255.255.255.192
+description REDE 172.16.19.192/26 RECEPCAO
+no shutdown
+exit
+interface gigabitEthernet 0/0.90
+encapsulation dot1q 90
+ip address 172.16.20.1 255.255.255.224
+description REDE 172.16.20.0/27 QUALIDADE
+no shutdown
+exit
+interface gigabitEthernet 0/0.100
+encapsulation dot1q 100
+ip address 172.16.20.33 255.255.255.240
+description REDE 172.16.20.32/28 SERVIDORES
+no shutdown
+exit
+do wr
